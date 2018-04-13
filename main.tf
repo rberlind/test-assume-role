@@ -10,7 +10,8 @@ resource "null_resource" "write_credentials" {
 
   provisioner "local-exec" {
     command = "sudo apt-get -y install awscli"
-
+  }
+  
   provisioner "local-exec" {
     command = "aws sts assume-role --role-arn=arn:aws:iam::128997349609:role/terraform-role --role-session-name='TFE-Apply' --region=us-east-1 >> json_credentials"
   }
