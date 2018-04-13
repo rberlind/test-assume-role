@@ -55,7 +55,3 @@ resource "aws_instance" "web" {
     Name = "assumed_role_instance"
   }
 }
-
-output "aws_access_key" {
-  value = "${data.null_data_source.read_credentials.outputs["aws_access_key_id"]}"
-}
