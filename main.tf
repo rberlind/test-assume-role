@@ -12,15 +12,15 @@ resource "null_resource" "write_credentials" {
   }
 
   provisioner "local-exec" {
-    command = "cat /tmp/credentials | jq --exit-status --raw-output .Credentials.AccessKeyId >> aws_access_key_id"
+    command = "cat json_credentials | jq --exit-status --raw-output .Credentials.AccessKeyId >> aws_access_key_id"
   }
 
   provisioner "local-exec" {
-    command = "cat /tmp/credentials | jq --exit-status --raw-output .Credentials.SecretAccessKey >> aws_secret_access_key"
+    command = "cat json_credentials | jq --exit-status --raw-output .Credentials.SecretAccessKey >> aws_secret_access_key"
   }
 
   /*provisioner "local-exec" {
-    command = "cat /tmp/credentials | jq --exit-status --raw-output .Credentials.SessionToken >> aws_session_token"
+    command = "cat json_credentials | jq --exit-status --raw-output .Credentials.SessionToken >> aws_session_token"
   }*/
 }
 
