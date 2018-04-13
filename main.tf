@@ -27,13 +27,15 @@ resource "null_resource" "write_credentials" {
     command = "cat json_credentials | jq --exit-status --raw-output .Credentials.SessionToken >> aws_session_token"
   }
     
+  
+    
 }
 
 data "null_data_source" "read_credentials" {
   inputs = {
-    aws_access_key_id     = "${file("aws_access_key_id")}"
-    aws_secret_access_key = "${file("aws_secret_access_key")}"
-    aws_session_token     = "${file("aws_session_token")}"
+    aws_access_key_id     = "${chomp(file("aws_access_key_id"))}"
+    aws_secret_access_key = "${chomp(file("aws_secret_access_key"))}"
+    aws_session_token     = "${chomp(file("aws_session_token"))}"
   }
   depends_on = ["null_resource.write_credentials"]
 }
@@ -45,14 +47,14 @@ provider "aws" {
   token      = "${data.null_data_source.read_credentials.outputs["aws_session_token"]}"
 }
   
-/*resource "aws_instance" "web" {
+resource "aws_instance" "web" {
   ami           = "ami-2e1ef954"
   instance_type = "t2.micro"
 
   tags {
     Name = "assumed_role_instance"
   }
-}*/
+}
 
 output "aws_access_key" {
   value = "${data.null_data_source.read_credentials.outputs["aws_access_key_id"]}"
