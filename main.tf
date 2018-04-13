@@ -40,7 +40,7 @@ data "null_data_source" "read_credentials" {
 provider "aws" {
   region     = "us-east-1"
   access_key = "${data.null_data_source.read_credentials.outputs["aws_access_key_id"]}"
-  secret_key = "${data.null_data_source.read_credentials.outputs["aws_access_key_id"]}"
+  secret_key = "${data.null_data_source.read_credentials.outputs["aws_secret_access_key"]}"
   token      = "${data.null_data_source.read_credentials.outputs["aws_session_token"]}"
 }
   
