@@ -26,6 +26,7 @@ resource "null_resource" "write_credentials" {
   provisioner "local-exec" {
     command = "cat json_credentials | jq --exit-status --raw-output .Credentials.SessionToken >> aws_session_token"
   }
+    
 }
 
 data "null_data_source" "read_credentials" {
@@ -44,12 +45,15 @@ provider "aws" {
   token      = "${data.null_data_source.read_credentials.outputs["aws_session_token"]}"
 }
   
-resource "aws_instance" "web" {
+/*resource "aws_instance" "web" {
   ami           = "ami-2e1ef954"
   instance_type = "t2.micro"
 
   tags {
     Name = "assumed_role_instance"
   }
-}
+}*/
 
+output "aws_access_key" {
+  value = "${data.null_data_source.read_credentials.outputs["aws_access_key_id"]}"
+}
