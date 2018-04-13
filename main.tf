@@ -27,7 +27,9 @@ resource "null_resource" "write_credentials" {
     command = "cat json_credentials | jq --exit-status --raw-output .Credentials.SessionToken >> aws_session_token"
   }
     
-  
+  /*provisioner "local-exec" {
+    command = "sleep 15"
+  }*/
     
 }
 
